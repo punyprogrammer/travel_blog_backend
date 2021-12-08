@@ -42,6 +42,9 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", catRoutes);
+app.get("/", (req, res) => {
+  res.json("This is the home Url");
+});
 app.listen(PORT, () => {
   console.log("Backend is running on sever ", PORT);
 });
