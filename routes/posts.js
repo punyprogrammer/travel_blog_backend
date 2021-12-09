@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
         },
       });
     } else {
-      posts = await Post.find();
+      posts = await Post.find().sort({ createdAt: "desc" });
     }
     res.status(200).json(posts);
   } catch (err) {
