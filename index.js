@@ -27,6 +27,15 @@ const storage = multer.diskStorage({
     cb(null, req.body.name);
   },
 });
+app.use(cors());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://amar-blog.herokuapp.com/"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 const upload = multer({ storage: storage });
 //upload route
 app.post("/api/upload", upload.single("file"), (req, res) => {
@@ -34,16 +43,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 
 //middleware
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://amar-blog.herokuapp.com"); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 app.use(express.json());
-app.use(cors());
+
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
